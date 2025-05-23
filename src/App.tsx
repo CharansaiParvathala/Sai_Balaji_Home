@@ -13,11 +13,11 @@ import Contact from './sections/Contact';
 import SplashScreen from './components/SplashScreen';
 import Chatbot from './components/Chatbot';
 
-function App() {
+const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    document.title = "Sri Sai Balaji Constructions";
+    document.title = 'Sri Sai Balaji Constructions';
   }, []);
 
   return (
@@ -44,6 +44,6 @@ function App() {
       </AudioProvider>
     </ThemeProvider>
   );
-}
+};
 
 export default App;
