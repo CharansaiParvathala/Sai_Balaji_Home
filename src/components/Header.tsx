@@ -28,21 +28,22 @@ const Header: React.FC = () => {
 
           {/* Company Logo */}
           <div className="text-center relative">
-            <div className="relative w-20 h-20 md:w-28 md:h-28 mx-auto rounded-full overflow-hidden">
-  {/* Glowing Fire Background */}
-  <div className="absolute inset-0 z-0 flex items-center justify-center">
-    <div className="fire-ring"></div>
-    <div className="fire-glow"></div>
-    <div className="fire-particles"></div>
-  </div>
+            <div className="w-20 h-20 md:w-28 md:h-28 mx-auto rounded-full bg-mint-50 dark:bg-gray-700 flex items-center justify-center border-2 border-mint-600 dark:border-gray-600 shadow-lg p-1 relative">
+              {/* Fire Effect Container */}
+              <div className="fire-container">
+                <div className="fire-ring"></div>
+                <div className="fire-particles"></div>
+                <div className="fire-glow"></div>
+              </div>
 
-  {/* Circular Image on Top */}
-  <img
-    src="image/company.png"
-    alt={t('header.logoAlt')}
-    className="w-full h-full object-cover rounded-full relative z-10 border-2 border-mint-600 dark:border-gray-600 shadow-lg"
-  />
-</div>
+              {/* Logo */}
+              <div className="w-20 h-20 md:w-28 md:h-28 mx-auto rounded-full bg-mint-50 dark:bg-gray-800 flex items-center justify-center border-2 border-mint-600 shadow-lg p-1">
+                <img
+                  src="image/company.png"
+                  alt={t('header.logoAlt')}
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
             </div>
 
             <h1 className="hidden md:block mt-2 text-2xl font-bold text-mint-800 dark:text-gray-100">
