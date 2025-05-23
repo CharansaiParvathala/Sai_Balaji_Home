@@ -1,110 +1,86 @@
-import React, { createContext, useContext, useState, useRef, useEffect } from 'react';
-import { TEMPLES } from '../constants';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useAudio } from '../context/AudioContext';
 
-const DAY_SPECIFIC_TEMPLES: Record<number, number> = {
-  0: 16, // Sunday → Konark Sun Temple
-  1: 6,  // Monday → Somnath
-  2: 12, // Tuesday → Hanuman Garhi
-  3: 0,  // Wednesday → Siddhivinayak
-  4: 13, // Thursday → Dwarkadhish Temple
-  5: 15, // Friday → Mahalakshmi Temple
-  6: 14, // Saturday → Shani Shingnapur
-};
-
-const getDayTemple = () => {
-  const dayOfWeek = new Date().getDay();
-  const templeId = DAY_SPECIFIC_TEMPLES[dayOfWeek];
-  const temple = TEMPLES.find(t => t.id === templeId);
-  if (temple) return temple;
-
-  // fallback
-  const daySpecificIds = Object.values(DAY_SPECIFIC_TEMPLES);
-  const nonDaySpecific = TEMPLES.filter(t => !daySpecificIds.includes(t.id));
-  return nonDaySpecific[dayOfWeek % nonDaySpecific.length] || TEMPLES[0];
-};
-
-export interface Temple {
-  id: number;
-  name: string;
-  god: string;
-  chant: string;
-  description: string;
-  visitOrder: string;
-  image: string;
-  link: string;
-  audio: string;
+interface SplashScreenProps {
+  onComplete: () => void;
 }
 
-interface AudioContextType {
-  isPlaying: boolean;
-  toggleAudio: () => void;
-  initializeAudio: () => Promise<void>;
-  currentTemple: Temple;
-}
+const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
+  const [loadedCount, setLoadedCount] = useState(0);
+  const [audioReady, setAudioReady] = useState(false);
+  const { initializeAudio, currentTemple } = useAudio();
 
-const AudioContext = createContext<AudioContextType | undefined>(undefined);
+  const imagesToLoad = useMemo<string[]>(() => {
+    if (!currentTemple?.image) return [];
+    return [
+      currentTemple.image,
+      '/image/company.png',
+      '/image/tirumala.png',
+      '/image/ganesh.png',
+      '/image/kasi.png',
+    ];
+  }, [currentTemple.image]);
 
-export const useAudio = (): AudioContextType => {
-  const ctx = useContext(AudioContext);
-  if (!ctx) throw new Error('useAudio must be used within AudioProvider');
-  return ctx;
-};
-
-export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isPlaying, setIsPlaying] = useState(true);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  const [currentTemple] = useState<Temple>(() => {
-    const temple = getDayTemple();
-    const filename = temple.image.split('/').pop() || '';
-    const basename = filename.replace(/\.[^/.]+$/, '');
-    return {
-      ...temple,
-      audio: `/audio/${basename}.mp3`,
-    };
-  });
-
-  const initializeAudio = (): Promise<void> => {
-    const src = currentTemple.audio;
-    return new Promise(resolve => {
-      const a = new Audio(src);
-      a.volume = 0.3;
-      a.loop = true;
-      a.oncanplaythrough = () => {
-        audioRef.current = a;
-        if (isPlaying) a.play().catch(() => setIsPlaying(false));
-        resolve();
-      };
-      a.onerror = () => {
-        console.error('Audio load failed:', src);
-        resolve();
-      };
-    });
-  };
-
+  // preload images
   useEffect(() => {
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-    };
+    if (imagesToLoad.length === 0) return;
+    let isMounted = true;
+    imagesToLoad.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => isMounted && setLoadedCount(c => c + 1);
+      img.onerror = () => isMounted && setLoadedCount(c => c + 1);
+    });
+    return () => { isMounted = false; };
+  }, [imagesToLoad]);
+
+  // once images loaded, preload audio
+  useEffect(() => {
+    if (loadedCount < imagesToLoad.length) return;
+    initializeAudio().then(() => setAudioReady(true));
+  }, [loadedCount, imagesToLoad.length, initializeAudio]);
+
+  // lock scroll
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
   }, []);
 
-  useEffect(() => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.play().catch(() => setIsPlaying(false));
-    } else {
-      audioRef.current.pause();
-    }
-  }, [isPlaying]);
+  const allLoaded = loadedCount >= imagesToLoad.length && audioReady;
+  const pct = imagesToLoad.length
+    ? Math.round((loadedCount / imagesToLoad.length) * 100)
+    : 0;
 
-  const toggleAudio = () => setIsPlaying(p => !p);
+  const handleEnter = () => {
+    if (allLoaded) onComplete();
+  };
 
   return (
-    <AudioContext.Provider value={{ isPlaying, toggleAudio, initializeAudio, currentTemple }}>
-      {children}
-    </AudioContext.Provider>
+    <div
+      className="splash-screen flex flex-col items-center justify-center min-h-screen transition-all duration-500"
+      style={{
+        backgroundImage: allLoaded ? `url(${currentTemple.image})` : undefined,
+        backgroundColor: '#000',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="om-symbol text-8xl text-white drop-shadow-xl animate-pulse">
+        ॐ
+      </div>
+      <div className="loading-text mt-4 text-xl text-white drop-shadow-lg">
+        {allLoaded ? 'Welcome!' : `Loading ${pct}%`}
+      </div>
+      {allLoaded && (
+        <button
+          onClick={handleEnter}
+          className="welcome-button mt-8 px-8 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition"
+        >
+          Enter
+        </button>
+      )}
+    </div>
   );
 };
+
+export default SplashScreen;
