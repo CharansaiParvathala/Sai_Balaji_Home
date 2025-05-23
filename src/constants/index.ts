@@ -1,5 +1,4 @@
-// src/i18n/data.ts
-import { t } from './index'
+import { t } from '../i18n'
 
 export interface Service {
   id: number
