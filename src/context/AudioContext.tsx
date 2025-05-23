@@ -37,6 +37,7 @@ export interface Temple {
 interface AudioContextType {
   isPlaying: boolean;
   playAudio: () => Promise<void>;
+  toggleAudio: () => Promise<void>;
   currentTemple: Temple;
   audioReady: boolean;
   initializeAudio: () => Promise<void>;
@@ -65,11 +66,10 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
   });
 
-  // Initialize and preload audio once on mount
+  // Initialize audio on mount
   const initializeAudio = (): Promise<void> => {
     return new Promise((resolve) => {
       if (audioRef.current) {
-        // Already initialized
         resolve();
         return;
       }
@@ -111,8 +111,25 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       });
   };
 
+  // The fix: toggleAudio either plays or pauses based on current state
+  const toggleAudio = async (): Promise<void> => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      try {
+        await audioRef.current.play();
+        setIsPlaying(true);
+      } catch (error) {
+        console.error('Toggle play failed:', error);
+        setIsPlaying(false);
+      }
+    }
+  };
+
   return (
-    <AudioContext.Provider value={{ isPlaying, playAudio, currentTemple, audioReady, initializeAudio }}>
+    <AudioContext.Provider value={{ isPlaying, playAudio, toggleAudio, currentTemple, audioReady, initializeAudio }}>
       {children}
     </AudioContext.Provider>
   );
