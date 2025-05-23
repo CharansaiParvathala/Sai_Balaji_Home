@@ -1,0 +1,162 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "projects": "Projects",
+    "achievements": "Achievements",
+    "temples": "Temples",
+    "contact": "Contact"
+  },
+  "hero": {
+    "welcome": "Welcome to Sri Sai Balaji Constructions",
+    "subtitle": "Where we build pipelines with spiritual integrity",
+    "seeServices": "See Services",
+    "visitTemples": "Visit Temples"
+  },
+  "quickLinks": {
+    "title": "Quick Links",
+    "services": "Services",
+    "projects": "Projects",
+    "temples": "Temples",
+    "contact": "Contact"
+  },
+  "services": {
+    "title": "Our Services",
+    "description": "We provide high-quality pipeline solutions for industrial and commercial clients, combining technical expertise with spiritual values.",
+    "getQuote": "Get a Quote",
+    "items": {
+      "construction": {
+        "title": "Pipeline Construction",
+        "description": "Building strong pipelines."
+      },
+      "maintenance": {
+        "title": "Pipeline Maintenance",
+        "description": "Keeping pipelines safe with pipeline coating."
+      },
+      "inspection": {
+        "title": "Pipeline Inspection",
+        "description": "Checking pipelines for quality."
+      }
+    }
+  },
+  "projects": {
+    "title": "Our Projects",
+    "description": "Explore our completed and ongoing pipeline construction projects.",
+    "items": {
+      "industrial": {
+        "title": "Industrial Pipeline Network",
+        "description": "Construction of 50km industrial pipeline network for major manufacturing plant.",
+        "status": "Completed"
+      },
+      "municipal": {
+        "title": "Municipal Water System",
+        "description": "Installation of water distribution system serving 100,000 residents.",
+        "status": "In Progress"
+      },
+      "oil": {
+        "title": "Oil Transport Pipeline",
+        "description": "Construction of high-pressure oil transport pipeline system.",
+        "status": "Completed"
+      }
+    }
+  },
+  "achievements": {
+    "title": "Our Achievements",
+    "description": "Milestones that showcase our commitment to excellence and spiritual values.",
+    "items": {
+      "safety": {
+        "title": "Safety Excellence",
+        "description": "1000+ days without incidents"
+      },
+      "quality": {
+        "title": "Quality Certification",
+        "description": "ISO 9001:2015 Certified"
+      },
+      "satisfaction": {
+        "title": "Client Satisfaction",
+        "description": "98% Client Retention Rate"
+      },
+      "impact": {
+        "title": "Community Impact",
+        "description": "50+ Temple Renovations"
+      }
+    }
+  },
+  "temples": {
+    "title": "Sacred Temples",
+    "description": "Explore the divine temples that inspire our spiritual journey and guide our business principles.",
+    "showMore": "See More",
+    "showLess": "Show Less",
+    "visitWebsite": "Visit Website",
+    "donate": "Donate",
+    "items": {
+      "tirumala": {
+        "name": "Tirumala",
+        "god": "Sri Venkateswara Swamy",
+        "chant": "Om Namo Venkatesaya",
+        "description": "Famous hill temple in Andhra Pradesh.",
+        "visitOrder": "Koneti Snanum → Varaha Swamy → Lord Sri Venkateswara → Prasadam → Alivelu Mangapuram"
+      },
+      "kasi": {
+        "name": "Kasi",
+        "god": "Lord Shiva",
+        "chant": "Om Namah Shivaya",
+        "description": "Holy city on the Ganges.",
+        "visitOrder": "Ganga Aarti → Kasi Vishwanath → Annapurna"
+      },
+      "rameswaram": {
+        "name": "Rameswaram",
+        "god": "Lord Rama",
+        "chant": "Jai Shri Ram",
+        "description": "Island temple in Tamil Nadu.",
+        "visitOrder": "Agni Theertham → Ramanathaswamy → Dhanushkodi"
+      }
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Get in touch with us for your pipeline construction needs or spiritual inquiries.",
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Send Message",
+      "placeholders": {
+        "name": "John Doe",
+        "email": "your@email.com",
+        "subject": "Pipeline Construction Inquiry",
+        "message": "Your message here..."
+      }
+    }
+  },
+  "footer": {
+    "contact": {
+      "title": "Contact Us",
+      "email": "Email: info@srisaibalajiconst.com",
+      "phone": "Phone: +91 98765 43210",
+      "address": "Address: 123 Pipeline Road, Hyderabad, India"
+    },
+    "quickLinks": {
+      "title": "Quick Links"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "text": "To provide high-quality pipeline construction services while maintaining spiritual values and integrity in all our business practices.",
+      "mantra": "Om Shanti Shanti Shanti"
+    },
+    "copyright": "© {year} Sri Sai Balaji Constructions. All rights reserved."
+  },
+  "chatbot": {
+    "title": "Chat with Us",
+    "open": "Open chat",
+    "close": "Close chat",
+    "placeholder": "Type your message...",
+    "send": "Send message",
+    "defaultResponse": "Thank you for your message. Our team will get back to you shortly."
+  },
+  "splash": {
+    "welcome": "Enter Temple",
+    "mantra": "Om Namah Shivaya"
+  }
+}

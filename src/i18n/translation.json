@@ -1,0 +1,11 @@
+{
+    "chatbot": {
+      "defaultResponse": "Sorry, I couldn't understand that. Please try again.",
+      "title": "Ask Me Anything",
+      "open": "Open chatbot",
+      "close": "Close chatbot",
+      "placeholder": "Type your message...",
+      "send": "Send"
+    }
+  }
+  
