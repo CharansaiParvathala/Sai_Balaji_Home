@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useRef, useEffect } from 'react';
 import { TEMPLES } from '../constants';
 
-const DAY_SPECIFIC_TEMPLES = {
+const DAY_SPECIFIC_TEMPLES: Record<number, number> = {
   0: 16, // Sunday → Konark Sun Temple
   1: 6,  // Monday → Somnath
   2: 12, // Tuesday → Hanuman Garhi
@@ -14,21 +14,16 @@ const DAY_SPECIFIC_TEMPLES = {
 const getDayTemple = () => {
   const dayOfWeek = new Date().getDay();
   const templeId = DAY_SPECIFIC_TEMPLES[dayOfWeek];
-
   const temple = TEMPLES.find(t => t.id === templeId);
-
-  if (temple) {
-    return temple;
-  }
+  if (temple) return temple;
 
   // fallback
   const daySpecificIds = Object.values(DAY_SPECIFIC_TEMPLES);
-  const nonDaySpecificTemples = TEMPLES.filter(t => !daySpecificIds.includes(t.id));
-  const fallbackIndex = dayOfWeek % nonDaySpecificTemples.length;
-  return nonDaySpecificTemples[fallbackIndex] || TEMPLES[0];
+  const nonDaySpecific = TEMPLES.filter(t => !daySpecificIds.includes(t.id));
+  return nonDaySpecific[dayOfWeek % nonDaySpecific.length] || TEMPLES[0];
 };
 
-interface Temple {
+export interface Temple {
   id: number;
   name: string;
   god: string;
@@ -43,16 +38,16 @@ interface Temple {
 interface AudioContextType {
   isPlaying: boolean;
   toggleAudio: () => void;
-  initializeAudio: () => void;
+  initializeAudio: () => Promise<void>;
   currentTemple: Temple;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
 
 export const useAudio = (): AudioContextType => {
-  const context = useContext(AudioContext);
-  if (!context) throw new Error('useAudio must be used within an AudioProvider');
-  return context;
+  const ctx = useContext(AudioContext);
+  if (!ctx) throw new Error('useAudio must be used within AudioProvider');
+  return ctx;
 };
 
 export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -61,57 +56,51 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [currentTemple] = useState<Temple>(() => {
     const temple = getDayTemple();
-
-    // Extract the file name from the image path, e.g. "ganesh.png"
-    const imageFilename = temple.image.split('/').pop() || '';
-    // Remove the extension, e.g. "ganesh"
-    const audioName = imageFilename.replace(/\.[^/.]+$/, '');
-    // Build the audio path dynamically
-    const audioPath = `/audio/${audioName}.mp3`;
-
+    const filename = temple.image.split('/').pop() || '';
+    const basename = filename.replace(/\.[^/.]+$/, '');
     return {
       ...temple,
-      audio: audioPath,
+      audio: `/audio/${basename}.mp3`,
     };
   });
 
-  const initializeAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.play().catch((error) => {
-        console.error('Audio playback failed:', error);
-        setIsPlaying(false);
-      });
-      setIsPlaying(true);
-    }
+  const initializeAudio = (): Promise<void> => {
+    const src = currentTemple.audio;
+    return new Promise(resolve => {
+      const a = new Audio(src);
+      a.volume = 0.3;
+      a.loop = true;
+      a.oncanplaythrough = () => {
+        audioRef.current = a;
+        if (isPlaying) a.play().catch(() => setIsPlaying(false));
+        resolve();
+      };
+      a.onerror = () => {
+        console.error('Audio load failed:', src);
+        resolve();
+      };
+    });
   };
 
   useEffect(() => {
-    audioRef.current = new Audio(currentTemple.audio);
-    audioRef.current.volume = 0.3;
-    audioRef.current.loop = true;
-
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
       }
     };
-  }, [currentTemple.audio]);
+  }, []);
 
   useEffect(() => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.play().catch((error) => {
-          console.error('Audio playback failed:', error);
-          setIsPlaying(false);
-        });
-      } else {
-        audioRef.current.pause();
-      }
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.play().catch(() => setIsPlaying(false));
+    } else {
+      audioRef.current.pause();
     }
   }, [isPlaying]);
 
-  const toggleAudio = () => setIsPlaying((prev) => !prev);
+  const toggleAudio = () => setIsPlaying(p => !p);
 
   return (
     <AudioContext.Provider value={{ isPlaying, toggleAudio, initializeAudio, currentTemple }}>
