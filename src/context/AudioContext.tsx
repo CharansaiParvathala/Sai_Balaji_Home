@@ -2,13 +2,13 @@ import React, { createContext, useContext, useState, useRef, useEffect } from 'r
 import { TEMPLES } from '../constants';
 
 const DAY_SPECIFIC_TEMPLES: Record<number, number> = {
-  0: 16, // Sunday → Konark Sun Temple
-  1: 6,  // Monday → Somnath
-  2: 12, // Tuesday → Hanuman Garhi
-  3: 0,  // Wednesday → Siddhivinayak
-  4: 13, // Thursday → Dwarkadhish Temple
-  5: 15, // Friday → Mahalakshmi Temple
-  6: 14, // Saturday → Shani Shingnapur
+  0: 16,
+  1: 6,
+  2: 12,
+  3: 0,
+  4: 13,
+  5: 15,
+  6: 14,
 };
 
 const getDayTemple = () => {
@@ -17,7 +17,6 @@ const getDayTemple = () => {
   const temple = TEMPLES.find(t => t.id === templeId);
   if (temple) return temple;
 
-  // fallback
   const daySpecificIds = Object.values(DAY_SPECIFIC_TEMPLES);
   const nonDaySpecific = TEMPLES.filter(t => !daySpecificIds.includes(t.id));
   return nonDaySpecific[dayOfWeek % nonDaySpecific.length] || TEMPLES[0];
@@ -37,9 +36,10 @@ export interface Temple {
 
 interface AudioContextType {
   isPlaying: boolean;
-  toggleAudio: () => void;
-  initializeAudio: () => Promise<void>;
+  playAudio: () => Promise<void>;
   currentTemple: Temple;
+  audioReady: boolean;
+  initializeAudio: () => Promise<void>;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -51,7 +51,8 @@ export const useAudio = (): AudioContextType => {
 };
 
 export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioReady, setAudioReady] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [currentTemple] = useState<Temple>(() => {
@@ -64,46 +65,54 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
   });
 
+  // Initialize and preload audio once on mount
   const initializeAudio = (): Promise<void> => {
-    const src = currentTemple.audio;
-    return new Promise(resolve => {
-      const a = new Audio(src);
+    return new Promise((resolve) => {
+      if (audioRef.current) {
+        // Already initialized
+        resolve();
+        return;
+      }
+      const a = new Audio(currentTemple.audio);
       a.volume = 0.3;
       a.loop = true;
+
       a.oncanplaythrough = () => {
+        setAudioReady(true);
         audioRef.current = a;
-        if (isPlaying) a.play().catch(() => setIsPlaying(false));
         resolve();
       };
+
       a.onerror = () => {
-        console.error('Audio load failed:', src);
+        console.error('Failed to load audio:', currentTemple.audio);
+        setAudioReady(false);
         resolve();
       };
     });
   };
 
   useEffect(() => {
+    initializeAudio();
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
       }
     };
-  }, []);
+  }, [currentTemple.audio]);
 
-  useEffect(() => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.play().catch(() => setIsPlaying(false));
-    } else {
-      audioRef.current.pause();
-    }
-  }, [isPlaying]);
-
-  const toggleAudio = () => setIsPlaying(p => !p);
+  const playAudio = (): Promise<void> => {
+    if (!audioRef.current) return Promise.resolve();
+    return audioRef.current.play()
+      .then(() => setIsPlaying(true))
+      .catch(err => {
+        console.error('Play audio failed:', err);
+        setIsPlaying(false);
+      });
+  };
 
   return (
-    <AudioContext.Provider value={{ isPlaying, toggleAudio, initializeAudio, currentTemple }}>
+    <AudioContext.Provider value={{ isPlaying, playAudio, currentTemple, audioReady, initializeAudio }}>
       {children}
     </AudioContext.Provider>
   );
