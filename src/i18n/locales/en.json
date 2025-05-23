@@ -1,4 +1,177 @@
-{
+{ 
+  "services": {
+    "pipelineConstruction": {
+      "title": "Pipeline Construction",
+      "description": "Building strong pipelines."
+    },
+    "pipelineMaintenance": {
+      "title": "Pipeline Maintenance",
+      "description": "Keeping pipelines safe with pipeline coating."
+    },
+    "pipelineInspection": {
+      "title": "Pipeline Inspection",
+      "description": "Checking pipelines for quality."
+    }
+  },
+  "temples": {
+    "siddhivinayak": {
+      "name": "Siddhivinayak",
+      "god": "Lord Ganesha",
+      "chant": "Om Ganeshaya Namah",
+      "description": "Iconic temple in Mumbai dedicated to Lord Ganesha, known for fulfilling devotees’ wishes.",
+      "visitOrder": "Main Entrance → Darshan Queue → Ganesha Idol → Circumambulation → Prasad Counter"
+    },
+    "tirumala": {
+      "name": "Tirumala",
+      "god": "Sri Venkateswara Swamy",
+      "chant": "Om Namo Venkatesaya",
+      "description": "Famous hill temple in Andhra Pradesh.",
+      "visitOrder": "Koneti Snanum → Varaha Swamy → Lord Sri Venkateswara → Prasadam → Alivelu Mangapuram"
+    },
+    "kasi": {
+      "name": "Kasi",
+      "god": "Lord Shiva",
+      "chant": "Om Namah Shivaya",
+      "description": "Holy city on the Ganges.",
+      "visitOrder": "Ganga Aarti → Kasi Vishwanath → Annapurna"
+    },
+    "rameswaram": {
+      "name": "Rameswaram",
+      "god": "Lord Rama",
+      "chant": "Jai Shri Ram",
+      "description": "Island temple in Tamil Nadu.",
+      "visitOrder": "Agni Theertham → Ramanathaswamy → Dhanushkodi"
+    },
+    "jagannathPuri": {
+      "name": "Jagannath Puri",
+      "god": "Lord Jagannath",
+      "chant": "Jai Jagannath",
+      "description": "Sacred temple in Odisha, part of Char Dham pilgrimage.",
+      "visitOrder": "Bada Danda → Jagannath Temple → Gundicha Temple"
+    },
+    "meenakshiAmman": {
+      "name": "Meenakshi Amman",
+      "god": "Goddess Meenakshi",
+      "chant": "Om Sri Meenakshi Amman",
+      "description": "Historic temple in Madurai, Tamil Nadu, known for its architecture.",
+      "visitOrder": "Meenakshi Sundareswarar → Golden Lotus Tank → Thousand Pillar Hall"
+    },
+    "somnath": {
+      "name": "Somnath",
+      "god": "Lord Shiva",
+      "chant": "Om Namah Shivaya",
+      "description": "Ancient Jyotirlinga temple in Gujarat.",
+      "visitOrder": "Triveni Sangam → Somnath Temple → Bhalka Tirtha"
+    },
+    "vaishnoDevi": {
+      "name": "Vaishno Devi",
+      "god": "Goddess Vaishno Devi",
+      "chant": "Jai Mata Di",
+      "description": "Holy cave shrine in Jammu and Kashmir.",
+      "visitOrder": "Katra → Ban Ganga → Vaishno Devi Cave → Bhairon Temple"
+    },
+    "sabarimala": {
+      "name": "Sabarimala",
+      "god": "Lord Ayyappa",
+      "chant": "Swamiye Saranam Ayyappa",
+      "description": "Hill temple in Kerala, known for its strict pilgrimage rituals.",
+      "visitOrder": "Pamba River → Malikappuram → Ayyappa Temple"
+    },
+    "goldenTemple": {
+      "name": "Golden Temple",
+      "god": "Guru Granth Sahib",
+      "chant": "Waheguru Ji Ka Khalsa",
+      "description": "Sikh spiritual center in Amritsar, Punjab.",
+      "visitOrder": "Amrit Sarovar → Harmandir Sahib → Langar Hall"
+    },
+    "kedarnath": {
+      "name": "Kedarnath",
+      "god": "Lord Shiva",
+      "chant": "Om Namah Shivaya",
+      "description": "Jyotirlinga temple in the Himalayas, Uttarakhand.",
+      "visitOrder": "Gaurikund → Kedarnath Temple → Bhairavnath Temple"
+    },
+    "hanumanGarhi": {
+      "name": "Hanuman Garhi (Tuesday Special)",
+      "god": "Lord Hanuman",
+      "chant": "Jai Bajrang Bali",
+      "description": "Tuesday is dedicated to Hanuman for strength and protection.",
+      "visitOrder": "Main Gate → Hanuman Idol → Circumambulation"
+    },
+    "dwarkadhishTemple": {
+      "name": "Dwarkadhish Temple (Wednesday Special)",
+      "god": "Lord Krishna",
+      "chant": "Om Namo Bhagavate Vasudevaya",
+      "description": "Wednesday is ideal for Krishna worship, for knowledge and peace.",
+      "visitOrder": "Gomti Ghat → Dwarka Darshan → Rukmini Temple"
+    },
+    "shaniShingnapur": {
+      "name": "Shani Shingnapur (Saturday Special)",
+      "god": "Shani Dev",
+      "chant": "Om Sham Shanicharaya Namah",
+      "description": "Saturday is for Shani Dev – remover of karmic obstacles.",
+      "visitOrder": "Main Idol → Oil Offering → Circumambulation"
+    },
+    "mahalakshmiTemple": {
+      "name": "Mahalakshmi Temple (Friday Special)",
+      "god": "Goddess Lakshmi",
+      "chant": "Om Shreem Mahalakshmyai Namah",
+      "description": "Friday is best to seek blessings of wealth and harmony.",
+      "visitOrder": "Main Shrine → Lakshmi Idol → Prasad Counter"
+    },
+    "konarkSunTemple": {
+      "name": "Konark Sun Temple (Sunday Special)",
+      "god": "Surya",
+      "chant": "",
+      "description": "Sunday is the day of Sun God, best for vitality and health.",
+      "visitOrder": "Chariot View → Natya Mandap → Surya Idol"
+    },
+    "shirdiSaiBabaTemple": {
+      "name": "Shirdi Sai Baba Temple (Thursday Special)",
+      "god": "Sai Baba",
+      "chant": "Om Sai Namo Namah",
+      "description": "Thursday is Guru's day, best for visiting Sai Baba temples.",
+      "visitOrder": "Samadhi Mandir → Dwarkamai → Chavadi"
+    }
+  },
+  "quickLinks": {
+    "services": "Services",
+    "projects": "Projects",
+    "temples": "Temples",
+    "contact": "Contact"
+  },
+  "deities": {
+    "surya": { "name": "Lord Surya" },
+    "shiva": { "name": "Lord Shiva" },
+    "hanuman": { "name": "Lord Hanuman" },
+    "ganesha": { "name": "Lord Ganesha" },
+    "vishnu": { "name": "Lord Vishnu" },
+    "lakshmi": { "name": "Goddess Lakshmi" },
+    "shani": { "name": "Lord Shani" }
+  },
+  "glossary": {
+    "pipelineCoating": "Protective layer to prevent corrosion",
+    "prasadam": "Food offered to the deity"
+  },
+  "templeCard": {
+    "god": "God",
+    "chant": "Chant",
+    "visitOrder": "Visit Order",
+    "descriptions": {
+      "1": "A sacred temple known for its vibrant festivals.",
+      "2": "An ancient shrine nestled in the hills.",
+      "3": "A divine place of spiritual healing."
+    }
+  }, 
+  "header": {
+    "logoAlt": "Company Logo",
+    "title": "Sai Balaji Constructions",
+    "subtitle": "Building pipelines with Strong Foundation"
+  },
+  "audio": {
+    "mute": "Mute devotional sound",
+    "unmute": "Unmute devotional sound"
+  },
   "nav": {
     "home": "Home",
     "services": "Services",
@@ -13,14 +186,14 @@
     "seeServices": "See Services",
     "visitTemples": "Visit Temples"
   },
-  "quickLinks": {
+  "quickLinks2": {
     "title": "Quick Links",
     "services": "Services",
     "projects": "Projects",
     "temples": "Temples",
     "contact": "Contact"
   },
-  "services": {
+  "services2": {
     "title": "Our Services",
     "description": "We provide high-quality pipeline solutions for industrial and commercial clients, combining technical expertise with spiritual values.",
     "getQuote": "Get a Quote",
@@ -82,7 +255,7 @@
       }
     }
   },
-  "temples": {
+  "temples2": {
     "title": "Sacred Temples",
     "description": "Explore the divine temples that inspire our spiritual journey and guide our business principles.",
     "showMore": "See More",
@@ -131,6 +304,20 @@
     }
   },
   "footer": {
+    "contactTitle": "Contact Us",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "links": {
+      "services": "Services",
+      "projects": "Projects",
+      "temples": "Temples",
+      "contact": "Contact"
+    },
+    "missionTitle": "Our Mission",
+    "missionText": "To provide high-quality pipeline construction services while maintaining spiritual values and integrity in all our business practices.",
+    "omShanti": "Om Shanti Shanti Shanti",
+    "rights": "All rights reserved.",
     "contact": {
       "title": "Contact Us",
       "email": "Email: info@srisaibalajiconst.com",
